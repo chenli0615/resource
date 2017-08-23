@@ -1,0 +1,11 @@
+.layer {
+    width: 600px;
+    height: 600px;
+    background: #ccc;
+}
+
+.layer>div {
+    width: 400px;
+    height: 200px;
+    background: url('../../assets/success.png') repeat;
+}

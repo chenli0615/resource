@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        this
+    </title>
+</head>
+
+<body>
+
+
+
+    <script>
+        window.name = 'global';
+        var myObject = {
+            name: 'chenli',
+            getName: function() {
+                return this.name;
+            }
+        }
+        var a = myObject.getName;
+
+        console.log(myObject.a());
+        console.log(window.a());
+        console.log(a());
+        console.log(myObject.getName());
+
+        //只要没有对象调用一律为window下调用
+    </script>
+
+</body>
+
+</html>

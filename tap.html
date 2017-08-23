@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        
+    </title>
+    <style>
+    table{
+        table-layout: fixed;
+        width: 100%;
+
+    }
+        td{
+            width: 300px;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis; 
+            border:1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+
+
+<table>
+    <tr>
+        <td style="width: 200px">11111111111</td>
+        <td>22222222</td>
+        <td>3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333</td>
+        <td>44444</td>
+    </tr>
+</table>
+    <script>
+    // touchend 时禁用touchmove  可用于tap 点击事件
+    
+    (function() {
+        var flag = false;
+        window.addEventListener('touchmove', function(ev) {
+            console.log("111"+flag);
+            flag || (flag = true, window.addEventListener('touchend', stopTouchendPropagation, true));
+            console.log("222"+flag);
+        }, false);
+        function stopTouchendPropagation(ev) {
+            ev.stopPropagation();
+            setTimeout(function() {
+                window.removeEventListener('touchend', stopTouchendPropagation, true);
+                flag = false;
+            }, 50);
+        }
+    })()
+
+    window.addEventListener('touchend', function(){
+        console.log("a")
+    }, false)
+
+    </script>
+
+</body>
+
+</html>
