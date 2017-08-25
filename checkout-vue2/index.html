@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-for="item in proList">{{item.proName}}:{{item.proId | money("元")}}</div>
+        <div v-for="item in proList">{{item.proName}}:{{item.proId | formatMoney}}</div>
+
+        <input type="text" v-model="ms">
+        <p>{{answer}}</p>
+    </div>
+    <script src="js/vue.min.js"></script>
+    <script src="js/vue-resource.min.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                proList: [],
+                ms: "111",
+                answer: ""
+            },
+            filters: {
+                formatMoney: function(value) {
+                    return "¥" + value;
+                }
+            },
+            watch: {
+                ms: function() {
+                    console.log("aaaaa")
+                    this.answer = "Waiting for you to stop typing...";
+                    this.getMs();
+                }
+            },
+            mounted: function() {
+                var _this = this;
+                this.$nextTick(function() {
+                    _this.view();
+                })
+            },
+            methods: {
+                view: function() {
+                    this.$http.get("data/data.json", {
+                        "id": 123
+                    }).then(res => {
+                        console.log(res)
+                        this.proList = res.body.result.list;
+                    })
+                },
+                getMs: function() {
+                    console.log("bbbb")
+                    if (this.ms.indexOf("?") === -1) {
+                        this.answer = 'Questions usually contain a question mark. ;-)';
+                        return;
+                    }
+                    this.answer = "Thinking...";
+
+                }
+            }
+        })
+
+        Vue.filter('money', function(value, type) {
+            return value + type;
+        })
+    </script>
+</body>
+
+</html>

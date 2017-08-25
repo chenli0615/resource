@@ -1,0 +1,18 @@
+{
+    "result": {
+
+        "cartInfo": [{
+            "name": "黄鹤楼",
+            "price": "19",
+            "count": 10
+        }, {
+            "name": "马兰花",
+            "price": "19",
+            "count": 1
+        }, {
+            "name": "我不知道叫什么",
+            "price": "19",
+            "count": 1
+        }]
+    }
+}

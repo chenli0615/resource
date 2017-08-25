@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .radio {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border: 1px solid #ccc;
+        }
+        
+        .radio.checked,
+        .checkAll.checked {
+            background: red;
+        }
+        
+        .checkAll {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cart">
+        <h2>购物车</h2>
+        <table>
+            <tr>
+                <th>商品信息</th>
+                <th>商品金额</th>
+                <th>商品数量</th>
+                <th>金额</th>
+                <th>编辑</th>
+            </tr>
+            <tr v-for="(item,index) in cartData">
+                <td>
+                    <a class="radio" :class="{'checked':item.isChecked}" @click="changeCheck(item);calcAccout()"></a>{{item.name}}</td>
+                <td>{{item.price}}</td>
+                <td><span @click="calcCount(item,-1);calcAccout()">-</span><input style="width:20px" type="text" v-model="item.count"><span @click="calcCount(item,1);calcAccout()">+</span></td>
+                <td>{{item.price * item.count}}</td>
+                <td @click="deletePro(index);calcAccout()">删除</td>
+            </tr>
+            <tr>
+                <td><span class="checkAll" @click="checkAll();calcAccout()" :class="{checked:checkAllFlag}">全选</span></td>
+                <td></td>
+                <td>总金额：<span>{{totalAccount | money("元")}}</span></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <script src="js/vue.min.js"></script>
+    <script src="js/vue-resource.min.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: "#cart",
+            data: {
+                cartData: [],
+                checkAllFlag: false,
+                totalAccount: 0
+            },
+            mounted: function() {
+                var _this = this;
+                this.$nextTick(function() {
+                    _this.$http.get('data/data.json', {})
+                        .then(function(res) {
+                            _this.cartData = res.body.result.cartInfo;
+                        })
+                })
+            },
+            methods: {
+                changeCheck: function(item) {
+                    if (typeof item.isChecked === 'undefined') {
+                        Vue.set(item, 'isChecked', true)
+                            //this.$set(item, "isChecked", true)
+                    } else {
+                        item.isChecked = !item.isChecked;
+                        console.log(item.isChecked)
+                    }
+                },
+                checkAll: function() {
+                    var _this = this;
+                    var checkNum = 0;
+                    typeof this.cartData[0].isChecked !== "undefined" && this.cartData.forEach(function(item, index) {
+                        checkNum = item.isChecked === true ? checkNum + 1 : checkNum;
+                    })
+                    if (checkNum === this.cartData.length) {
+                        this.checkAllFlag = false;
+                        this.cartData.forEach(function(item, index) {
+                            item.isChecked = false;
+                        })
+                    } else {
+                        this.checkAllFlag = true;
+                        this.cartData.forEach(function(item, index) {
+                            item.isChecked = true;
+                        })
+                    }
+                },
+                calcCount: function(pro, flag) {
+                    if (flag > 0) {
+                        pro.count++;
+                    } else {
+                        pro.count = pro.count > 1 ? pro.count - 1 : 1;
+                    }
+                },
+                deletePro: function(index) {
+                    this.cartData.splice(index, 1);
+                },
+                calcAccout: function() {
+                    var totalAccount = 0;
+                    this.cartData.forEach(function(item, index) {
+                        totalAccount = item.isChecked ? totalAccount + (item.price * item.count) : totalAccount
+                    });
+                    this.totalAccount = totalAccount;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
