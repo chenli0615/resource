@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>singleton3</title>
+</head>
+</head>
+<body>
+
+
+
+
+<script type="text/javascript">
+
+// 动态创建命名空间
+
+var MyApp={};
+
+MyApp.namespace=function(name){
+    var parts=name.split('.');
+    var current=MyApp;
+
+    for(var i in parts){
+        if(!current[parts[i]]){
+            current[parts[i]]={}
+        }
+        current=current[parts[i]];
+
+    }
+}
+
+// MyApp.namespace('event');
+MyApp.namespace('dom.style');
+console.dir(MyApp);
+
+
+
+
+
+
+
+</script>
+
+</body>
+
+</html>
+
+
+</body>
+</html>

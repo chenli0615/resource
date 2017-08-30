@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>singleton3</title>
+</head>
+</head>
+<body>
+
+<button id="loginBtn">说什么好尼</button>
+
+<script type="text/javascript">
+// 惰性单例
+// var createloginLayer=function(){
+//     var div;
+//     return function(){
+//         if(!div){
+//             div=document.createElement('div');
+//             div.innerHTML='wo shi haha';
+//             div.style.display='none';
+//             document.body.appendChild(div);
+//         }
+        
+//         return div;
+//     }
+    
+// }()
+
+// document.getElementById("loginBtn").onclick=function(){
+//     var loginLayer = createloginLayer();
+//     loginLayer.style.display='block';
+// }
+
+
+// 通用的惰性单例
+
+var getSingle=function(fn){
+    var result;
+    return function(){
+        return result || (result=fn.apply(this,arguments));
+    }
+};
+
+
+
+// 执行
+var createLoginLayer=function(){
+    var div=document.createElement('div');
+    div.innerHTML='wo shi ';
+    div.style.display='none';
+    document.body.appendChild(div);
+
+    return div;
+
+}
+var createSingleLoginLayer=getSingle(createLoginLayer);
+
+document.getElementById('loginBtn').onclick=function(){
+    var loginLayer=createSingleLoginLayer();
+    loginLayer.style.display='block';
+
+}
+
+
+var arr=[1,2,3,4]
+
+console.log([].shift.call(arr))
+
+
+</script>
+</body>
+</html>
+</body>
+</html>

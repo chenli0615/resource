@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>singleton</title>
+</head>
+</head>
+<body>
+
+
+
+
+<script type="text/javascript">
+// 方法一
+var Singleton=function(name){
+    this.name=name;
+    this.instance=null;
+
+}
+Singleton.getName=function(name){
+    if(!this.instance){
+        this.instance= new Singleton(name);
+    }
+    return this.instance;
+}
+
+var a1=Singleton.getName('aaa111');
+var a2=Singleton.getName('aaa222');
+console.log(a1);
+console.log(a2);
+
+
+//方法二
+var Singleton2=function(name){
+    this.name=name;
+}
+Singleton2.getName=(function(){
+    var instance=null;
+    return function(name){
+        if(!instance){
+            instance= new Singleton(name)
+        }
+        return instance;
+    }
+})()
+
+var b1=Singleton2.getName('bbb111');
+var b2=Singleton2.getName('bbb222');
+
+console.log(b1);
+console.log(b2)
+
+
+
+
+
+</script>
+
+</body>
+
+</html>
+
+
+</body>
+</html>

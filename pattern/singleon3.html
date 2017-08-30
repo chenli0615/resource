@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>singleton3</title>
+</head>
+</head>
+<body>
+
+
+
+
+<script type="text/javascript">
+// 用代理实现的单例模式
+
+
+var CreateDiv=function(html){
+
+    this.html=html;
+    this.init();
+
+};
+
+CreateDiv.prototype.init=function(){
+    var div=document.createElement('div');
+    div.innerHTML=this.html;
+    document.body.appendChild(div);
+
+}
+
+
+var proxySingletonCreateDiv=(function(html){
+    var instance;
+
+    return function(html){
+        if(!instance){
+            instance=new CreateDiv(html);
+        };
+        return instance;
+    }
+
+})()
+
+var d1= proxySingletonCreateDiv('ddd111');
+var d2= proxySingletonCreateDiv('ddd222');
+console.log(d1);
+console.log(d2);
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+
+</html>
+
+
+</body>
+</html>

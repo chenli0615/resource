@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>singleton2</title>
+</head>
+</head>
+<body>
+
+
+
+
+<script type="text/javascript">
+// 透明的单例模式
+var CreateDiv=(function(){
+
+    
+    var instance;
+
+    var CreateDiv=function(html){
+        
+        if(instance){
+            return instance;
+        }
+
+        this.html=html;
+        this.init();
+
+        return instance=this;
+    };
+
+    CreateDiv.prototype.init=function(){
+        var div=document.createElement('div');
+        div.innerHTML=this.html;
+        document.body.appendChild(div);
+
+    }
+
+    return CreateDiv;
+
+
+})()
+
+var c1= new CreateDiv('ccc111');
+var c2=new CreateDiv('ccc222');
+console.log(c1);
+console.log(c2);
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+
+</html>
+
+
+</body>
+</html>
